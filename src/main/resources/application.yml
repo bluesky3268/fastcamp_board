@@ -1,0 +1,53 @@
+debug: false
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+
+logging:
+  level:
+    com.fastcampus.board: debug
+    org.springframework.web.servlet: debug
+    org.hibernate.type.descriptor.sql.BasicBinder: trace
+
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/board
+    username: boardUser
+    password: 1234
+
+  jpa:
+    # 테스트용 데이터베이스 데이터 쿼리 파일 사용 설정
+    defer-datasource-initialization: true
+    hibernate:
+      ddl-auto: create
+    open-in-view: false
+    show-sql: true
+    properties:
+      hibernate.format_sql: true
+      hibernate.default_batch_fetch_size: 100
+  h2:
+    console:
+      enabled: false
+  sql:
+    init:
+      mode: always
+
+#  thymeleaf:
+#    cache: true
+
+---
+
+#테스트 DB
+#spring:
+#  config.activate.on-profile: testdb
+#  datasource:
+#    driver-class-name: org.h2.Driver
+#    url: jdbc:h2:mem:board;mode=mysql
+#  sql:
+#    init:
+#      mode: always
+#  test.database.replace: none
