@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
 @DisplayName("Data REST 테스트")
 @Transactional // DB에 실제로 쿼리가 나가는 테스트이기 때문에 @Transactional을 붙여주는게 좋다.
 @AutoConfigureMockMvc
