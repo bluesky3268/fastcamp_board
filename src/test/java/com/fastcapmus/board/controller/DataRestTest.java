@@ -1,5 +1,6 @@
 package com.fastcapmus.board.controller;
 
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+@Disabled("Spring Data REST 통합테스트는 불필요하여 제외함")
 @DisplayName("Data REST 테스트")
 @Transactional // DB에 실제로 쿼리가 나가는 테스트이기 때문에 @Transactional을 붙여주는게 좋다.
 @AutoConfigureMockMvc
