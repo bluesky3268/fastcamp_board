@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>게시글 페이지</title>
+</head>
+
+<body>
+
+    <header id="header"></header>
+
+    <main>
+        <header>
+            <h1>첫번째 글</h1>
+        </header>
+
+        <aside>
+            <p>hyunbenny</p>
+            <p><a href="mailto:bluesky3268@gmail.com">bluesky3268@gmail.com</a></p>
+            <p>
+                <time datetime="2023-01-29T21:05:00">2023-01-29</time>
+            </p>
+            <p>#java</p>
+        </aside>
+
+        <section>
+            <p>본문<br><br></p>
+
+            <div>
+                <form>
+                    <label for="articleComment" hidden>댓글</label>
+                    <textarea id="articleComment" placeholder="댓글을 작성해주세요." rows="3"></textarea>
+                    <button type="submit">댓글 쓰기</button>
+                </form>
+
+                <ul>
+                    <li>
+                        <div>
+                            <time><small>2023-01-29</small></time>
+                            <strong>hyunbenny</strong>
+                            <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+
+                            </p>
+                        </div>
+                    </li>
+                    <li>
+                        <div>
+                            <time><small>2023-01-30</small></time>
+                            <strong>hyunbenny</strong>
+                            <p> Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a
+                                galley of type and scrambled it to make a type specimen book.
+                            </p>
+                        </div>
+                    </li>
+                    <li>
+                        <div>
+                            <time><small>2023-01-30</small></time>
+                            <strong>hyunbenny</strong>
+                            <p> It has survived not only five
+                                centuries, but also the leap into electronic typesetting, remaining essentially unchanged.
+                                It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum
+                                passages, and more recently with desktop publishing software like Aldus PageMaker including
+                                versions of Lorem Ipsum.
+                            </p>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+
+            <nav class="page-pagination" role="navigation">
+                <a href="#">이전 글</a>
+                <a href="#">다음 글</a>
+            </nav>
+
+        </section>
+
+    </main>
+
+    <footer id="footer"></footer>
+
+</body>
+</html>
