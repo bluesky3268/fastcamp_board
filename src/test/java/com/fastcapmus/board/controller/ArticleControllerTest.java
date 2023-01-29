@@ -1,10 +1,12 @@
 package com.fastcapmus.board.controller;
 
+import com.fastcapmus.board.config.SecurityConfig;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -12,6 +14,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @DisplayName("ViewController - 게시글 테스트")
+@Import(SecurityConfig.class)
 @WebMvcTest(ArticleController.class)
 // 컨트롤러 클래스를 지정해주면 해당 컨트롤러만 읽어와서 테스트를 돌림(지정 안할 경우 모든 컨트롤러를 다 읽어서 돌리기 때문에 무거워진다.)
 class ArticleControllerTest {
