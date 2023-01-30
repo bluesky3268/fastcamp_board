@@ -25,6 +25,8 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-data-rest'
     implementation 'org.springframework.data:spring-data-rest-hal-explorer'
     implementation 'org.springframework.boot:spring-boot-starter-thymeleaf' // Thymeleaf 의존성 추가
+    implementation  'org.springframework.boot:spring-boot-starter-security' // spring security 의존성 추가
+    implementation  'org.thymeleaf.extras:thymeleaf-extras-springsecurity5'// spring security 관련 의존성 추가
 
     /** Querydsl 설정 */
     // spring boot 3.0 미만
