@@ -2,6 +2,7 @@ package com.fastcapmus.board.dto;
 
 import com.fastcapmus.board.domain.Article;
 import com.fastcapmus.board.domain.ArticleComment;
+import com.fastcapmus.board.domain.UserAccount;
 
 import java.time.LocalDateTime;
 
@@ -24,19 +25,24 @@ public record ArticleCommentDto(
     }
 
     public static ArticleCommentDto from(ArticleComment entity) {
-        return new ArticleCommentDto(entity.getId()
-                , entity.getArticle().getId()
-                , UserAccountDto.from(entity.getUserAccount())
-                , entity.getContent()
-                , entity.getCreatedBy()
-                , entity.getCreatedAt()
-                , entity.getModifiedBy()
-                , entity.getModifiedAt()
+        return new ArticleCommentDto(
+                entity.getId(),
+                entity.getArticle().getId(),
+                UserAccountDto.from(entity.getUserAccount()),
+                entity.getContent(),
+                entity.getCreatedBy(),
+                entity.getCreatedAt(),
+                entity.getModifiedBy(),
+                entity.getModifiedAt()
         );
     }
 
     public ArticleComment toEntity(Article entity) {
-        return ArticleComment.of(entity, userAccountDto.toEntity(), content);
+        return ArticleComment.of(
+                userAccountDto.toEntity(),
+                entity,
+                content
+        );
     }
 
 }
