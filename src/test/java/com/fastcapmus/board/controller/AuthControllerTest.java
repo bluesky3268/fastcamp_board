@@ -13,7 +13,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@DisplayName("ViewController - 인증")
+@DisplayName("AuthController - 인증")
 @Import(SecurityConfig.class)
 @WebMvcTest
 public class AuthControllerTest {
