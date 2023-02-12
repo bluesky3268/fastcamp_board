@@ -2,6 +2,7 @@ package com.fastcapmus.board.repository;
 
 import com.fastcapmus.board.config.JpaConfig;
 import com.fastcapmus.board.domain.Article;
+import com.fastcapmus.board.domain.UserAccount;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,10 +23,14 @@ class JpaRepositoryTest {
     private final ArticleRepository articleRepository;
     private final ArticleCommentRepository articleCommentRepository;
 
+    private final UserAccountRepository userAccountRepository;
+
     public JpaRepositoryTest(@Autowired ArticleRepository articleRepository,
-                             @Autowired ArticleCommentRepository articleCommentRepository) {
+                             @Autowired ArticleCommentRepository articleCommentRepository,
+                             @Autowired UserAccountRepository userAccountRepository) {
         this.articleRepository = articleRepository;
         this.articleCommentRepository = articleCommentRepository;
+        this.userAccountRepository = userAccountRepository;
     }
 
     @Test
@@ -47,9 +52,11 @@ class JpaRepositoryTest {
     void insertTest() {
         // Given
         long previousCount = articleRepository.count();
+        UserAccount userAccount = userAccountRepository.save(UserAccount.of("hyunbenny", "pwd", null, null, null));
+        Article article = Article.of(userAccount, "NEW_ARTICLE", "new content!!!!!!", "#springboot");
 
         // When
-        articleRepository.save(Article.of("new Aritcle", "new Content", "#spring"));
+        articleRepository.save(article);
 
         // Then
         assertThat(articleRepository.count()).isEqualTo(previousCount + 1);
