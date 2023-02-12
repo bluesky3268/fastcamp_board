@@ -24,7 +24,7 @@ spring:
     defer-datasource-initialization: true
     hibernate:
       ddl-auto: create
-    open-in-view: false
+    open-in-view: false # OSIV 옵션 해제
     show-sql: true
     properties:
       hibernate.format_sql: true
