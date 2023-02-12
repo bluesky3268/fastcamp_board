@@ -8,11 +8,15 @@ import org.springframework.data.querydsl.binding.QuerydslBinderCustomizer;
 import org.springframework.data.querydsl.binding.QuerydslBindings;
 import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 
+import java.util.List;
+
 @RepositoryRestResource
 public interface ArticleCommentRepository extends JpaRepository<ArticleComment, Long>
         , QuerydslPredicateExecutor<ArticleComment>  // Data REST를 이용하여 기본적으로 제공하는 조회 기능(예 : /api/articles?title=Quisque ut erat.) 사용을 위해서 추가
         , QuerydslBinderCustomizer<QArticleComment> // 내 입맛에 맞게 사용하기 위해서 추가
 {
+
+    List<ArticleComment> findByArticle_Id(Long articleId);
 
     @Override
     default void customize(QuerydslBindings bindings, QArticleComment root) {

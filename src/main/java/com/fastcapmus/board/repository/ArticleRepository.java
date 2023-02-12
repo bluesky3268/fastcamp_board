@@ -2,6 +2,8 @@ package com.fastcapmus.board.repository;
 
 import com.fastcapmus.board.domain.Article;
 import com.fastcapmus.board.domain.QArticle;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.querydsl.QuerydslPredicateExecutor;
 import org.springframework.data.querydsl.binding.QuerydslBinderCustomizer;
@@ -14,6 +16,7 @@ public interface ArticleRepository extends JpaRepository<Article, Long>
         , QuerydslBinderCustomizer<QArticle> // 내 입맛에 맞게 사용하기 위해서 추가
 {
 
+    Page<Article> findByTitle(String title, Pageable pageable);
     @Override
     default void customize(QuerydslBindings bindings, QArticle root){
         // 리스팅을 하지 않은 프로퍼티를 검색에서 제외하기 -> true로 변경(기본값 : false)
