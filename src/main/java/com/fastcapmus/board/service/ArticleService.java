@@ -13,6 +13,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Optional;
+
 @Slf4j
 @RequiredArgsConstructor
 @Transactional
@@ -41,6 +43,10 @@ public class ArticleService {
         return articleRepository.findById(articleId)
                 .map(article -> ArticleWithCommentsDto.from(article))
                 .orElseThrow(() -> new EntityNotFoundException("해당 게시글이 없습니다. (articleId : " + articleId + ")"));
+    }
+
+    public long getArticleCount() {
+        return articleRepository.count();
     }
 
     public void saveArticle(ArticleDto dto) {

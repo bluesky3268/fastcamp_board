@@ -1,7 +1,6 @@
 package com.fastcapmus.board.controller;
 
 import com.fastcapmus.board.domain.type.SearchType;
-import com.fastcapmus.board.dto.ArticleDto;
 import com.fastcapmus.board.dto.response.ArticleResponse;
 import com.fastcapmus.board.dto.response.ArticleWithCommentsResponse;
 import com.fastcapmus.board.service.ArticleService;
@@ -62,6 +61,7 @@ public class ArticleController {
         log.info("article : {}", article);
         modelMap.addAttribute("article", article);
         modelMap.addAttribute("articleComments", article.articleCommentsResponse());
+        modelMap.addAttribute("totalCount", articleService.getArticleCount());
 
         return "articles/detail";
     }
