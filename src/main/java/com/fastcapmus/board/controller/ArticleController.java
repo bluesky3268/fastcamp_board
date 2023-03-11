@@ -50,6 +50,7 @@ public class ArticleController {
 
         modelMap.addAttribute("articles", articles);
         modelMap.addAttribute("paginationBarNumbers", barNumber);
+        modelMap.addAttribute("searchTypes", SearchType.values());
 
         log.info(modelMap.get("articles").toString());
         return "articles/index";

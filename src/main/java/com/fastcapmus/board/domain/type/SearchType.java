@@ -1,10 +1,18 @@
 package com.fastcapmus.board.domain.type;
 
-public enum SearchType {
-    TITLE,
-    CONTENT,
-    ID,
-    NICKNAME,
-    HASHTAG
+import lombok.Getter;
 
+public enum SearchType {
+    TITLE("제목"),
+    CONTENT("내용"),
+    ID("유저ID"),
+    NICKNAME("작성자"),
+    HASHTAG("해시태그");
+
+    @Getter
+    private final String description;
+
+    SearchType(String description) {
+        this.description = description;
+    }
 }
