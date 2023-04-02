@@ -1,10 +1,12 @@
 package com.fastcapmus.board.service;
 
 import com.fastcapmus.board.domain.Article;
+import com.fastcapmus.board.domain.UserAccount;
 import com.fastcapmus.board.domain.type.SearchType;
 import com.fastcapmus.board.dto.ArticleDto;
 import com.fastcapmus.board.dto.ArticleWithCommentsDto;
 import com.fastcapmus.board.repository.ArticleRepository;
+import com.fastcapmus.board.repository.UserAccountRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -14,7 +16,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Optional;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -23,6 +24,8 @@ import java.util.Optional;
 public class ArticleService {
 
     private final ArticleRepository articleRepository;
+    private final UserAccountRepository userAccountRepository;
+
 
     @Transactional(readOnly = true)
     public Page<ArticleDto> searchArticles(SearchType searchType, String searchKeyword, Pageable pageable) {
@@ -40,7 +43,14 @@ public class ArticleService {
     }
 
     @Transactional(readOnly = true)
-    public ArticleWithCommentsDto getArticle(Long articleId) {
+    public ArticleDto getArticle(Long articleId) {
+        return articleRepository.findById(articleId)
+                .map(ArticleDto::from)
+                .orElseThrow(() -> new EntityNotFoundException("해당 게시글이 없습니다. - (articleId : " + articleId  + ")"));
+    }
+
+    @Transactional(readOnly = true)
+    public ArticleWithCommentsDto getArticleWithComments(Long articleId) {
         return articleRepository.findById(articleId)
                 .map(article -> ArticleWithCommentsDto.from(article))
                 .orElseThrow(() -> new EntityNotFoundException("해당 게시글이 없습니다. (articleId : " + articleId + ")"));
@@ -51,12 +61,13 @@ public class ArticleService {
     }
 
     public void saveArticle(ArticleDto dto) {
-        articleRepository.save(dto.toEntity());
+        UserAccount userAccount = userAccountRepository.getReferenceById(dto.userAccountDto().userId());
+        articleRepository.save(dto.toEntity(userAccount));
     }
 
-    public void updateArticle(ArticleDto dto) {
+    public void updateArticle(Long articleId, ArticleDto dto) {
         try {
-            Article article = articleRepository.getReferenceById(dto.id());
+            Article article = articleRepository.getReferenceById(articleId);
 
             // not null 조건인 필드(컬럼)들은 null체크하는 방어 로직을 짜줘야 한다.
             if (dto.title() != null) article.setTitle(dto.title());

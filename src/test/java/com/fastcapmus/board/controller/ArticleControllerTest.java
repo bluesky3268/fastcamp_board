@@ -127,7 +127,7 @@ class ArticleControllerTest {
         Long articleId = 1L;
         long totalCount = 1L;
 
-        given(articleService.getArticle(articleId)).willReturn(createArticleWithCommentsDto());
+        given(articleService.getArticleWithComments(articleId)).willReturn(createArticleWithCommentsDto());
         given(articleService.getArticleCount()).willReturn(totalCount);
 
         // When & Then
@@ -140,7 +140,7 @@ class ArticleControllerTest {
                 .andExpect(model().attributeExists("totalCount"))
                 .andExpect(model().attribute("totalCount", totalCount));
 
-        then(articleService).should().getArticle(articleId);
+        then(articleService).should().getArticleWithComments(articleId);
         then(articleService).should().getArticleCount();
     }
 
