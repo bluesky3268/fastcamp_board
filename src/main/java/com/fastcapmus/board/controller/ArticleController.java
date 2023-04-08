@@ -93,7 +93,7 @@ public class ArticleController {
     @PostMapping("/form")
     public String postNewArticle(ArticleRequest articleRequest) {
         // TODO : 인증 정보 추가 필요
-        articleService.saveArticle(articleRequest.toDto(UserAccountDto.of("hyunbenny", "1234", "hyunbenny@mail.com", "hyunbenny", "memo", null, null, null, null)));
+        articleService.saveArticle(articleRequest.toDto(UserAccountDto.of("hyunbenny", "1234", "hyunbenny@mail.com", "hyunbenny", "memo")));
 
         return "redirect:/articles";
     }
@@ -112,8 +112,7 @@ public class ArticleController {
     public String updateArticle(@PathVariable Long articleId, ArticleRequest articleRequest) {
         // TODO : 인증 정보 추가 필요
         articleService.updateArticle(articleId, articleRequest.toDto(UserAccountDto.of(
-                "uno", "asdf1234", "uno@mail.com", "Uno", "memo", null, null, null, null
-        )));
+                "uno", "asdf1234", "uno@mail.com", "Uno", "memo")));
 
         return "redirect:/articles/" + articleId;
     }
