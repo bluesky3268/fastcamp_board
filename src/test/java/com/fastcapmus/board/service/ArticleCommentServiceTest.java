@@ -7,6 +7,7 @@ import com.fastcapmus.board.dto.ArticleCommentDto;
 import com.fastcapmus.board.dto.UserAccountDto;
 import com.fastcapmus.board.repository.ArticleCommentRepository;
 import com.fastcapmus.board.repository.ArticleRepository;
+import com.fastcapmus.board.repository.UserAccountRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -36,6 +37,9 @@ class ArticleCommentServiceTest {
     @Mock
     private ArticleRepository articleRepository;
 
+    @Mock
+    private UserAccountRepository userAccountRepository;
+
     @DisplayName("게시글 ID를 조회하면 해당 게시글의 댓글 리스트를 리턴한다.")
     @Test
     void givenArticleId_whenSearchingArticleComments_thenReturnArticleComments() {
@@ -60,6 +64,7 @@ class ArticleCommentServiceTest {
         // Given
         ArticleCommentDto dto = createArticleCommentDto("댓글");
         given(articleRepository.getReferenceById(dto.articleId())).willReturn(createArticle());
+        given(userAccountRepository.getReferenceById(dto.userAccountDto().userId())).willReturn(createUserAccount());
         given(articleCommentRepository.save(any(ArticleComment.class))).willReturn(null);
 
         // When
@@ -67,6 +72,7 @@ class ArticleCommentServiceTest {
 
         // Then
         then(articleRepository).should().getReferenceById(dto.articleId());
+        then(userAccountRepository).should().getReferenceById(dto.userAccountDto().userId());
         then(articleCommentRepository).should().save(any(ArticleComment.class));
     }
 
@@ -82,6 +88,23 @@ class ArticleCommentServiceTest {
 
         // Then
         then(articleRepository).should().getReferenceById(dto.articleId());
+        then(userAccountRepository).should().getReferenceById(dto.userAccountDto().userId());
+        then(articleCommentRepository).shouldHaveNoInteractions();
+    }
+
+    @DisplayName("댓글 저장을 시도했는데 해당 회원이 없으면, 경고 로그를 찍고 아무것도 안 한다.")
+    @Test
+    void givenNonexistentUser_whenSavingArticleComment_thenLogsSituationAndDoesNothing() {
+        // Given
+        ArticleCommentDto dto = createArticleCommentDto("댓글");
+        given(userAccountRepository.getReferenceById(dto.userAccountDto().userId())).willThrow(EntityNotFoundException.class);
+
+        // When
+        sut.saveArticleComment(dto);
+
+        // Then
+        then(articleRepository).should().getReferenceById(dto.articleId());
+        then(userAccountRepository).should().getReferenceById(dto.userAccountDto().userId());
         then(articleCommentRepository).shouldHaveNoInteractions();
     }
 
