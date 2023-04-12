@@ -4,8 +4,10 @@ import com.fastcapmus.board.domain.UserAccount;
 import com.fastcapmus.board.dto.ArticleCommentDto;
 import com.fastcapmus.board.dto.UserAccountDto;
 import com.fastcapmus.board.dto.request.ArticleCommentRequest;
+import com.fastcapmus.board.dto.security.BoardPrincipal;
 import com.fastcapmus.board.service.ArticleCommentService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -24,9 +26,9 @@ public class ArticleCommentController {
      */
 
     @PostMapping("/new")
-    public String postNewArticleComment(ArticleCommentRequest request) {
-        //TODO : 인증 정보 추가 필요
-        articleCommentService.saveArticleComment(request.toDto(UserAccountDto.of("hyunbenny1", "1234", "hyunbenny1@mail.com", "hyunbenny1", "memo")));
+    public String postNewArticleComment(ArticleCommentRequest request,
+                                        @AuthenticationPrincipal BoardPrincipal boardPrincipal) {
+        articleCommentService.saveArticleComment(request.toDto(boardPrincipal.toDto()));
         return "redirect:/articles/" + request.articleId();
     }
 
@@ -35,9 +37,10 @@ public class ArticleCommentController {
      * 우회하는 방법도 있지만 http표준을 준수하기 위해서 사용하지 않기로 함.
      */
     @PostMapping("/{commentId}/delete")
-    public String deleteComment(@PathVariable Long commentId, Long articleId) {
-        //TODO : 인증 정보 추가 필요
-        articleCommentService.deleteArticleComment(commentId);
+    public String deleteComment(@PathVariable Long commentId,
+                                Long articleId,
+                                @AuthenticationPrincipal BoardPrincipal boardPrincipal) {
+        articleCommentService.deleteArticleComment(commentId, boardPrincipal.getUsername());
         return "redirect:/articles/" + articleId;
     }
 

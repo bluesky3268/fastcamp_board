@@ -1,6 +1,7 @@
 package com.fastcapmus.board.controller;
 
 import com.fastcapmus.board.config.SecurityConfig;
+import com.fastcapmus.board.config.TestSecurityConfig;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +16,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @DisplayName("AuthController - 인증")
-@Import(SecurityConfig.class)
+@Import(TestSecurityConfig.class)
 @WebMvcTest(Void.class)
 /**
  * /login 페이지는 직접 만든 컨트롤러가 아니고

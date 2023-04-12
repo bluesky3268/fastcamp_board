@@ -2,19 +2,19 @@
 -- TODO: 테스트용이지만 비밀번호가 노출된 데이터 세팅. 개선하는 것이 좋을 지 고민해 보자.
 insert into user_account (user_id, user_password, nickname, email, memo, created_at, created_by, modified_at,
                           modified_by)
-values ('hyunbenny1', 'hyunbenny1234', 'hyunbenny1', 'hyunbenny1@mail.com', 'I am hyunbenny1.', now(), 'hyunbenny1',
+values ('hyunbenny1', '{noop}hyunbenny1234', 'hyunbenny1', 'hyunbenny1@mail.com', 'I am hyunbenny1.', now(), 'hyunbenny1',
         now(), 'hyunbenny1')
 ;
 
 insert into user_account (user_id, user_password, nickname, email, memo, created_at, created_by, modified_at,
                           modified_by)
-values ('hyunbenny2', 'hyunbenny1234', 'hyunbenny2', 'hyunbenny2@mail.com', 'I am hyunbenny2.', now(), 'hyunbenny2',
+values ('hyunbenny2', '{noop}hyunbenny1234', 'hyunbenny2', 'hyunbenny2@mail.com', 'I am hyunbenny2.', now(), 'hyunbenny2',
         now(), 'hyunbenny2')
 ;
 
 insert into user_account (user_id, user_password, nickname, email, memo, created_at, created_by, modified_at,
                           modified_by)
-values ('hyunbenny3', 'hyunbenny1234', 'hyunbenny3', 'hyunbenny3@mail.com', 'I am hyunbenny3.', now(), 'hyunbenny3',
+values ('hyunbenny3', '{noop}hyunbenny1234', 'hyunbenny3', 'hyunbenny3@mail.com', 'I am hyunbenny3.', now(), 'hyunbenny3',
         now(), 'hyunbenny3')
 ;
 
