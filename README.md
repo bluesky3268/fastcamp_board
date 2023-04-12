@@ -10,18 +10,18 @@
 
 ## 기술 스택
 * Spring Boot
+  * Spring Web
   * Spring Boot Acuactor
-  * Sprinb Web
+  * Spring Boot DevTools
   * Spring Data JPA
   * Spring Security
-  * Spring Boot DevTools
   * Spring Configuration Processor
-  * Rest Repositories
-  * Rest Repositories HAL Explorer
-  * Thymeleaf
-  * H2 Database
-  * MySQL Driver
-  * Lombok
+* Rest Repositories
+* Rest Repositories HAL Explorer
+* Thymeleaf
+* H2 Database
+* MySQL Driver
+* Lombok
 * Query DSL
 * Bootstrap
 * Heroku
