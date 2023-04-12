@@ -16,8 +16,8 @@
   * Spring Data JPA
   * Spring Security
   * Spring Configuration Processor
-* Rest Repositories
-* Rest Repositories HAL Explorer
+  * Spring Data Rest
+  * Spring Data Rest HAL Explorer
 * Thymeleaf
 * H2 Database
 * MySQL Driver
