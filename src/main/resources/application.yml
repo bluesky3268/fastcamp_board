@@ -58,3 +58,14 @@ spring:
 #    init:
 #      mode: always
 #  test.database.replace: none # 개별적으로 선언했던 AutoConfigureTestDatabase의 전역 설정
+
+---
+
+spring:
+  config:
+    activate:
+      on-profile: heroku
+  databaseSource:
+    url: ${CLEARDB_DATABASE_URL}
+  jpa.hibernate.ddl-auto: create
+  sql.init.mode: always
