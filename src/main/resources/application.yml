@@ -66,6 +66,7 @@ spring:
     activate:
       on-profile: heroku
   databaseSource:
-    url: ${CLEARDB_DATABASE_URL}
+    url: ${JWASDB_URL}
+    driver-class-name: com.mysql.cj.jdbc.Driver
   jpa.hibernate.ddl-auto: create
   sql.init.mode: always
