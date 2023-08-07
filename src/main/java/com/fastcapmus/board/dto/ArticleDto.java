@@ -4,13 +4,15 @@ import com.fastcapmus.board.domain.Article;
 import com.fastcapmus.board.domain.UserAccount;
 
 import java.time.LocalDateTime;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 public record ArticleDto(
         Long id,
         UserAccountDto userAccountDto,
         String title,
         String content,
-        String hashtag,
+        Set<HashtagDto> hashtagDtos,
         String createdBy,
         LocalDateTime createdAt,
 
@@ -18,12 +20,12 @@ public record ArticleDto(
 
         LocalDateTime modifiedAt
 ) {
-    public static ArticleDto of(Long id, UserAccountDto userAccountDto, String title, String content, String hashtag, String createdBy, LocalDateTime createdAt, String modifiedBy, LocalDateTime modifiedAt) {
-        return new ArticleDto(id, userAccountDto, title, content, hashtag, createdBy, createdAt, modifiedBy, modifiedAt);
+    public static ArticleDto of(Long id, UserAccountDto userAccountDto, String title, String content, Set<HashtagDto> hashtagDtos, String createdBy, LocalDateTime createdAt, String modifiedBy, LocalDateTime modifiedAt) {
+        return new ArticleDto(id, userAccountDto, title, content, hashtagDtos, createdBy, createdAt, modifiedBy, modifiedAt);
     }
 
-    public static ArticleDto of(UserAccountDto userAccountDto, String title, String content, String hashtag) {
-        return new ArticleDto(null, userAccountDto, title, content, hashtag, null, null, null, null);
+    public static ArticleDto of(UserAccountDto userAccountDto, String title, String content, Set<HashtagDto> hashtagDtos) {
+        return new ArticleDto(null, userAccountDto, title, content, hashtagDtos, null, null, null, null);
     }
 
     public static ArticleDto from(Article entity) {
@@ -31,7 +33,7 @@ public record ArticleDto(
                 , UserAccountDto.from(entity.getUserAccount())
                 , entity.getTitle()
                 , entity.getContent()
-                , entity.getHashtag()
+                , entity.getHashtags().stream().map(HashtagDto::from).collect(Collectors.toUnmodifiableSet())
                 , entity.getCreatedBy()
                 , entity.getCreatedAt()
                 , entity.getModifiedBy()
@@ -44,7 +46,6 @@ public record ArticleDto(
                 userAccount
                 , title
                 , content
-                , hashtag
         );
     }
 

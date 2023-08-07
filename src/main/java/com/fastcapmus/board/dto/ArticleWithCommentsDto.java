@@ -13,14 +13,14 @@ public record ArticleWithCommentsDto(
         Set<ArticleCommentDto> articleCommentDtos,
         String title,
         String content,
-        String hashtag,
+        Set<HashtagDto> hashtagDtos,
         String createdBy,
         LocalDateTime createdAt,
         String modifiedBy,
         LocalDateTime modifiedAt
 ) {
-    public static ArticleWithCommentsDto of(Long id, UserAccountDto userAccountDto, Set<ArticleCommentDto> articleCommentDtos, String title, String content, String hashtag, String createdBy, LocalDateTime createdAt, String modifiedBy, LocalDateTime modifiedAt) {
-        return new ArticleWithCommentsDto(id, userAccountDto, articleCommentDtos, title, content, hashtag, createdBy, createdAt, modifiedBy, modifiedAt);
+    public static ArticleWithCommentsDto of(Long id, UserAccountDto userAccountDto, Set<ArticleCommentDto> articleCommentDtos, String title, String content, Set<HashtagDto> hashtagDtos, String createdBy, LocalDateTime createdAt, String modifiedBy, LocalDateTime modifiedAt) {
+        return new ArticleWithCommentsDto(id, userAccountDto, articleCommentDtos, title, content, hashtagDtos, createdBy, createdAt, modifiedBy, modifiedAt);
     }
 
     public static ArticleWithCommentsDto from(Article entity) {
@@ -29,7 +29,7 @@ public record ArticleWithCommentsDto(
                 , entity.getArticleComments().stream().map(ArticleCommentDto::from).collect(Collectors.toCollection(LinkedHashSet::new))
                 , entity.getTitle()
                 , entity.getContent()
-                , entity.getHashtag()
+                , entity.getHashtags().stream().map(HashtagDto::from).collect(Collectors.toUnmodifiableSet())
                 , entity.getCreatedBy()
                 , entity.getCreatedAt()
                 , entity.getModifiedBy()

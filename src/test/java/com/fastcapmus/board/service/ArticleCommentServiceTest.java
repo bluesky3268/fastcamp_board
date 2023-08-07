@@ -2,6 +2,7 @@ package com.fastcapmus.board.service;
 
 import com.fastcapmus.board.domain.Article;
 import com.fastcapmus.board.domain.ArticleComment;
+import com.fastcapmus.board.domain.Hashtag;
 import com.fastcapmus.board.domain.UserAccount;
 import com.fastcapmus.board.dto.ArticleCommentDto;
 import com.fastcapmus.board.dto.UserAccountDto;
@@ -18,6 +19,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Set;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
@@ -188,7 +190,7 @@ class ArticleCommentServiceTest {
     private ArticleComment createArticleComment(String content) {
         return ArticleComment.of(
                 createUserAccount(),
-                Article.of(createUserAccount(), "title", "content", "hashtag"),
+                createArticle(),
                 content
         );
     }
@@ -204,11 +206,16 @@ class ArticleCommentServiceTest {
     }
 
     private Article createArticle() {
-        return Article.of(
+        Article article = Article.of(
                 createUserAccount(),
                 "title",
-                "content",
-                "#java"
+                "content"
         );
+        article.addHashtags(Set.of(createHashtag(article)));
+        return article;
+    }
+
+    private Hashtag createHashtag(Article article) {
+        return Hashtag.of("java");
     }
 }
