@@ -55,6 +55,7 @@ public class ArticleController {
         modelMap.addAttribute("articles", articles);
         modelMap.addAttribute("paginationBarNumbers", barNumber);
         modelMap.addAttribute("searchTypes", SearchType.values());
+        modelMap.addAttribute("searchTypeHashtag", SearchType.HASHTAG);
 
         log.info(modelMap.get("articles").toString());
         return "articles/index";
@@ -67,6 +68,7 @@ public class ArticleController {
         modelMap.addAttribute("article", article);
         modelMap.addAttribute("articleComments", article.articleCommentsResponse());
         modelMap.addAttribute("totalCount", articleService.getArticleCount());
+        modelMap.addAttribute("searchTypeHashtag", SearchType.HASHTAG);
 
         return "articles/detail";
     }

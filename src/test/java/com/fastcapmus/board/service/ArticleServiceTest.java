@@ -227,18 +227,15 @@ class ArticleServiceTest {
         // Given
         String hashtagName = "java";
         Pageable pageable = Pageable.ofSize(20);
-
         Article expectedArticle = createArticle();
         given(articleRepository.findByHashtagNames(List.of(hashtagName), pageable))
                 .willReturn(new PageImpl<>(List.of(expectedArticle), pageable, 1));
-
 
         // When
         Page<ArticleDto> articles = sut.searchArticlesViaHashtag(hashtagName, pageable);
 
         // Then
-        assertThat(articles).isEmpty();
-        assertThat(articles).isEqualTo(new PageImpl<>(List.of(ArticleDto.from(expectedArticle), pageable, 1)));
+        assertThat(articles).isEqualTo(new PageImpl<>(List.of(ArticleDto.from(expectedArticle)), pageable, 1));
         then(articleRepository).should().findByHashtagNames(List.of(hashtagName), pageable);
     }
 
