@@ -16,7 +16,7 @@ spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://localhost:3306/board
-    username: boardUser
+    username: hbcho
     password: 1234
 
   jpa:

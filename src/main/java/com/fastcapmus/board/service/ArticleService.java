@@ -15,6 +15,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Arrays;
 import java.util.List;
 
 @Slf4j
@@ -37,7 +38,7 @@ public class ArticleService {
             case CONTENT -> articleRepository.findByContentContaining(searchKeyword, pageable).map(article -> ArticleDto.from(article));
             case ID -> articleRepository.findByUserAccount_UserIdContaining(searchKeyword, pageable).map(article -> ArticleDto.from(article));
             case NICKNAME -> articleRepository.findByUserAccount_NicknameContaining(searchKeyword, pageable).map(article -> ArticleDto.from(article));
-            case HASHTAG -> articleRepository.findByHashtag("#" + searchKeyword, pageable).map(article -> ArticleDto.from(article));
+            case HASHTAG -> articleRepository.findByHashtagNames(Arrays.stream(searchKeyword.split(" ")).toList(), pageable).map(article -> ArticleDto.from(article));
         };
 
     }
@@ -74,7 +75,6 @@ public class ArticleService {
                 // not null 조건인 필드(컬럼)들은 null체크하는 방어 로직을 짜줘야 한다.
                 if (dto.title() != null) article.setTitle(dto.title());
                 if (dto.content() != null) article.setContent(dto.content());
-                article.setHashtag(dto.hashtag());
             }
         } catch (EntityNotFoundException e) {
             log.warn("게시글 수정 실패 : 해당 게시글을 수정하는데 필요한 정보를 찾을 수 없습니다. : {}", e.getLocalizedMessage());
@@ -89,7 +89,7 @@ public class ArticleService {
     public Page<ArticleDto> searchArticlesViaHashtag(String hashtag, Pageable pageable) {
         if(hashtag == null || hashtag.isBlank()) return Page.empty(pageable);
 
-        return articleRepository.findByHashtag(hashtag, pageable).map(ArticleDto::from);
+        return articleRepository.findByHashtagNames(null, pageable).map(ArticleDto::from);
     }
 
     public List<String> getHashtags() {

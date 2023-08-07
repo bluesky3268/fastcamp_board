@@ -22,7 +22,7 @@ public interface ArticleRepository extends JpaRepository<Article, Long>
     Page<Article> findByContentContaining(String content, Pageable pageable);
     Page<Article> findByUserAccount_UserIdContaining(String userId, Pageable pageable);
     Page<Article> findByUserAccount_NicknameContaining(String nickname, Pageable pageable);
-    Page<Article> findByHashtag(String hashtag, Pageable pageable);
+//    Page<Article> findByHashtag(String hashtag, Pageable pageable);
     void deleteByIdAndUserAccount_UserId(Long articleId, String userId);
 
     @Override
@@ -30,12 +30,12 @@ public interface ArticleRepository extends JpaRepository<Article, Long>
         // 리스팅을 하지 않은 프로퍼티를 검색에서 제외하기 -> true로 변경(기본값 : false)
         bindings.excludeUnlistedProperties(true);
         // 원하는 필드를 추가
-        bindings.including(root.title, root.content, root.hashtag, root.createdAt, root.createdBy);
+        bindings.including(root.title, root.content, root.hashtags, root.createdAt, root.createdBy);
         // == 매치가 아니라 like 매치로 변경
 //        bindings.bind(root.title).first((path, value) -> path.likeIgnoreCase(value)); // like '${value}' 쿼리로 생성
         bindings.bind(root.title).first((path, value) -> path.containsIgnoreCase(value)); // like '%${value}%' 쿼리로 생성
         bindings.bind(root.content).first((path, value) -> path.containsIgnoreCase(value));
-        bindings.bind(root.hashtag).first((path, value) -> path.containsIgnoreCase(value));
+        bindings.bind(root.hashtags.any().hashtagName).first((path, value) -> path.containsIgnoreCase(value));
         bindings.bind(root.createdBy).first((path, value) -> path.containsIgnoreCase(value));
         bindings.bind(root.createdAt).first((path, value) -> path.eq(value)); // 시분초까지 동일해야 하기 때문에 권장되는 방식이 아님 -> 일단은 해놓자
     }
