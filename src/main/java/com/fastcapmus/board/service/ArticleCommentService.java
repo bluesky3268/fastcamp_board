@@ -39,15 +39,31 @@ public class ArticleCommentService {
             user = userAccountRepository.getReferenceById(dto.userAccountDto().userId());
         } catch (EntityNotFoundException e) {
             log.warn("댓글 저장 실패 - 회원 정보를 찾을 수 없습니다. : {}", dto.userAccountDto().userId());
+            return;
         }
 
         try {
             article = articleRepository.getReferenceById(dto.articleId());
         } catch (EntityNotFoundException e) {
             log.warn("댓글 저장 실패 - 저장하려는 댓글의 게시글을 찾을 수 없습니다. : {}", e.getLocalizedMessage());
+            return;
         }
 
-        if(article!= null && user != null) articleCommentRepository.save(dto.toEntity(article, user));
+        ArticleComment articleComment = dto.toEntity(article, user);
+        if (dto.parentCommentId() != null) {
+            ArticleComment parentComment = articleCommentRepository.getReferenceById(dto.parentCommentId());
+            parentComment.addChildComment(articleComment);
+        } else{
+            articleCommentRepository.save(articleComment);
+        }
+
+        // 가독성을 높이자
+//        if (dto.isParentComment()) {
+//            ArticleComment parentComment = articleCommentRepository.getReferenceById(dto.parentCommentId());
+//            parentComment.addChildComment(articleComment);
+//        }else{
+//            articleCommentRepository.save(articleComment);
+//        }
     }
 
     public void updateArticleComment(ArticleCommentDto dto) {
